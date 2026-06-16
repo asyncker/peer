@@ -1,6 +1,7 @@
 from flask import Flask, request, send_file, current_app
 from urllib.parse import unquote
 import os
+import uuid
 
 app = Flask(__name__)
 content_types = {
@@ -30,23 +31,17 @@ def peerupload():
         return "", 200
     uploadpath = os.path.join(current_app.root_path, 'static', 'peerdata')
     os.makedirs(uploadpath, exist_ok=True)
-    i = 0
-    while True:
-        fileid = f"{i}_{file.filename}"
+    try:
+        ext = os.path.splitext(file.filename)[1].lower()
+        fileid = f"{uuid.uuid4()}{ext}"
         filepath = os.path.join(uploadpath, fileid)
-        i += 1
-        if os.path.exists(filepath):
-            continue
-        try:
-            file.save(filepath)
-            base_url = request.host_url
-            if request.headers.get('X-Forwarded-Proto') == 'https' or request.headers.get('X-Forwarded-Scheme') == 'https' or request.headers.get('X-Scheme') == 'https':
-                base_url = base_url.replace('http://', 'https://')
-            return f"{base_url.rstrip('/')}/peer/{fileid}", 200
-        except Exception:
-            if os.path.exists(filepath):
-                continue
-            return "", 200
+        file.save(filepath)
+        base_url = request.host_url
+        if request.headers.get('X-Forwarded-Proto') == 'https' or request.headers.get('X-Forwarded-Scheme') == 'https' or request.headers.get('X-Scheme') == 'https':
+            base_url = base_url.replace('http://', 'https://')
+        return f"{base_url.rstrip('/')}/peer/{fileid}", 200
+    except Exception:
+        return "", 200
 
 @app.route('/peer/<path:filename>')
 def peerload(filename):
