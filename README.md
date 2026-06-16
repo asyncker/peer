@@ -14,3 +14,4 @@ curl -F "file=@C:/Users/user/Desktop/file.png" https://peer1.pythonanywhere.com/
 | PHP    | https://peertest.liveblog365.com/peer/0_index.php    | 5.0   | Blocked | v 2.0   |
 | Python | https://peerphp.vercel.app                           | 3.0   | Allowed | v 3.0   |
 | Python | https://peer-y8z2.onrender.com                       | 0.0   | Blocked | v 2.0   |
+| PHP    | https://peer.byethost12.com                          | 5.0   | Blocked | v 3.0   |
