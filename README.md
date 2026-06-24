@@ -4,7 +4,7 @@
 
 CURL example:
 ```bash
-curl -F "file=@C:/Users/user/Desktop/file.png" https://peer1.pythonanywhere.com/peer/upload
+curl -F "file=@C:/Users/user/Desktop/file.png" https://flask-hello-world-phi-liart.vercel.app/peer/upload
 ```
 
 | Lang   | Endpoint                                             | GB    | CORS    | Version |
